@@ -1,0 +1,88 @@
+
+========== EXERCISE 6.15 – UNDO COMMAND ==========
+[PASS] Add A: execute -> undo -> execute
+Execute bước 1: MONDAY=The First Movie (2023) | TUESDAY=(Không có suất diễn)
+Execute bước 2: MONDAY=The First Movie (2023) | TUESDAY=The Second Movie (2024)
+Execute bước 3: MONDAY=(Không có suất diễn) | TUESDAY=The Second Movie (2024)
+Execute bước 4: MONDAY=(Không có suất diễn) | TUESDAY=(Không có suất diễn)
+Sau 4 lệnh: MONDAY=(Không có suất diễn) | TUESDAY=(Không có suất diễn)
+Undo bước 1: MONDAY=(Không có suất diễn) | TUESDAY=The Second Movie (2024)
+Undo bước 2: MONDAY=The First Movie (2023) | TUESDAY=The Second Movie (2024)
+Undo bước 3: MONDAY=The First Movie (2023) | TUESDAY=(Không có suất diễn)
+Undo bước 4: MONDAY=(Không có suất diễn) | TUESDAY=(Không có suất diễn)
+[PASS] 6.15: cả 4 lệnh đều Undo đúng
+
+========== EXERCISE 6.16 – COMMAND PROCESSOR ==========
+Sau 3 lệnh: MONDAY=(Không có suất diễn) | TUESDAY=The Second Movie (2024)
+Sau 3 lần Undo: MONDAY=(Không có suất diễn) | TUESDAY=(Không có suất diễn)
+[PASS] 6.16: Processor lưu lịch sử và Undo LIFO
+
+========== EXERCISE 6.17 – REDO COMMAND ==========
+Sau Redo: MONDAY=The First Movie (2023) | TUESDAY=The Second Movie (2024)
+[PASS] 6.17: Redo chạy đúng và mất hiệu lực khi có lệnh mới
+
+========== EXERCISE 6.18 – PROGRAM FACADE ==========
+Program sau 4 lệnh: MONDAY=(Không có suất diễn) | TUESDAY=(Không có suất diễn)
+Program sau Undo/Redo: MONDAY=(Không có suất diễn) | TUESDAY=The Second Movie (2024)
+[PASS] 6.18: Client gọi trực tiếp Program, logic history tách riêng
+
+========== REGRESSION TESTS ==========
+[PASS] 01 - Lịch mặc định có đủ 7 NullShow
+[PASS] 02 - Program.get() trả về đối tượng sao chép
+[PASS] 03 - Movie copy, equals, hashCode
+[PASS] 04 - NullShow copy độc lập
+[PASS] 05 - Add có thể Undo
+[PASS] 06 - Add thay thế phải Undo về phim cũ
+[PASS] 07 - Remove có thể Undo
+[PASS] 08 - Clear có thể Undo toàn bộ 7 ngày
+
+========== EXERCISE 6.15 – UNDO COMMAND ==========
+[PASS] Add A: execute -> undo -> execute
+Execute bước 1: MONDAY=The First Movie (2023) | TUESDAY=(Không có suất diễn)
+Execute bước 2: MONDAY=The First Movie (2023) | TUESDAY=The Second Movie (2024)
+Execute bước 3: MONDAY=(Không có suất diễn) | TUESDAY=The Second Movie (2024)
+Execute bước 4: MONDAY=(Không có suất diễn) | TUESDAY=(Không có suất diễn)
+Sau 4 lệnh: MONDAY=(Không có suất diễn) | TUESDAY=(Không có suất diễn)
+Undo bước 1: MONDAY=(Không có suất diễn) | TUESDAY=The Second Movie (2024)
+Undo bước 2: MONDAY=The First Movie (2023) | TUESDAY=The Second Movie (2024)
+Undo bước 3: MONDAY=The First Movie (2023) | TUESDAY=(Không có suất diễn)
+Undo bước 4: MONDAY=(Không có suất diễn) | TUESDAY=(Không có suất diễn)
+[PASS] 6.15: cả 4 lệnh đều Undo đúng
+[PASS] 09 - Undo theo thứ tự ngược 4 thao tác 6.15
+[PASS] 10 - UndoableCommand không được execute 2 lần liên tiếp
+[PASS] 11 - UndoableCommand không được Undo khi chưa execute
+[PASS] 12 - UndoableCommand execute lại được sau Undo (Redo)
+[PASS] 13 - CommandProcessor lưu lịch sử và Undo LIFO
+[PASS] 14 - Redo trả lại trạng thái
+[PASS] 15 - Lệnh mới sau Undo sẽ xóa lịch sử Redo
+[PASS] 16 - Redo nhiều bước tuân thủ thứ tự
+[PASS] 17 - Undo khi lịch sử trống ném lỗi
+[PASS] 18 - Redo khi lịch sử trống ném lỗi
+[PASS] 19 - Execute lỗi không làm mất redoStack
+[PASS] 20 - Undo lỗi không làm mất phần tử undoStack
+[PASS] 21 - Redo lỗi không làm mất phần tử redoStack
+[PASS] 22 - Program API Add/Remove/Clear đầy đủ
+[PASS] 23 - Program Undo các thao tác nghiệp vụ
+[PASS] 24 - Program Redo hoạt động sau Undo
+[PASS] 25 - Hai Program không dùng chung lịch sử
+[PASS] 26 - Snapshot không chia sẻ object với lịch gốc
+[PASS] 27 - Restore lưu đủ và chính xác 7 ngày
+[PASS] 28 - Restore snapshot thiếu ngày phải từ chối
+[PASS] 29 - Không chấp nhận tham số Null quan trọng
+[PASS] 30 - Hai lệnh sửa cùng ngày Undo theo thứ tự đúng
+[PASS] 31 - Clear sau khi Undo vẫn khôi phục đúng
+[PASS] 32 - Program.toString phản ánh đủ bảy ngày
+[PASS] 33 - Undo Clear khôi phục cả Movie và Concert
+[PASS] 34 - Concert có thể thêm và Undo đa hình
+[PASS] 35 - Undo Clear phải khôi phục tất cả 7 ngày
+[PASS] 36 - Redo Clear sau Undo khôi phục lịch trống
+[PASS] 37 - Một lệnh mới khi có Redo cũ làm tắt Redo
+[PASS] 38 - Nhiều instance Program có lịch sử độc lập
+[PASS] 39 - UndoableCommand trực tiếp cho phép redo sau undo
+[PASS] 40 - Program không lộ trực tiếp Processor hoặc Schedule
+[PASS] 41 - Program3 tạo đủ ba UndoableCommand
+[PASS] 42 - UndoableCommand kế thừa Command
+[PASS] 43 - Constructor injection dùng đúng processor được truyền
+[PASS] 44 - Program chỉ khai báo factory createXXXCommand private
+
+KẾT QUẢ: 44/44 TEST PASS
